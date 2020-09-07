@@ -41,6 +41,10 @@ public class MockAddressRepository {
         return new Address(streetAndNumber, city, state, zip);
     }
 
+    public static int getTotalAddresses() {
+        return ADDRESSES.length;
+    }
+
     /**
      * An array of random addresses for use in getRandom()
      */
