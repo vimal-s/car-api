@@ -1,4 +1,6 @@
-package com.udacity.boogle.maps;
+package com.udacity.boogle.maps.model;
+
+import java.util.Objects;
 
 /**
  * Declares a class to store an address, city, state and zip code.
@@ -9,9 +11,6 @@ public class Address {
     private String city;
     private String state;
     private String zip;
-
-    public Address() {
-    }
 
     public Address(String address, String city, String state, String zip) {
         this.address = address;
@@ -50,5 +49,35 @@ public class Address {
 
     public void setZip(String zip) {
         this.zip = zip;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Address address1 = (Address) o;
+        return Objects.equals(address, address1.address) &&
+                Objects.equals(city, address1.city) &&
+                Objects.equals(state, address1.state) &&
+                Objects.equals(zip, address1.zip);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(address, city, state, zip);
+    }
+
+    @Override
+    public String toString() {
+        return "Address{" +
+                "address='" + address + '\'' +
+                ", city='" + city + '\'' +
+                ", state='" + state + '\'' +
+                ", zip='" + zip + '\'' +
+                '}';
     }
 }
