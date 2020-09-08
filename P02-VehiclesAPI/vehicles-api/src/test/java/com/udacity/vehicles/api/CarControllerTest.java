@@ -62,7 +62,7 @@ public class CarControllerTest {
      * Creates pre-requisites for testing, such as an example car.
      */
     @Before
-    public void setup() {
+    public void setup() throws Throwable {
         Car car = getCar();
         car.setId(1L);
         given(carService.save(any())).willReturn(car);
