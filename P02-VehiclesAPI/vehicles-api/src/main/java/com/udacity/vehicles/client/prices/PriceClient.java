@@ -1,5 +1,6 @@
 package com.udacity.vehicles.client.prices;
 
+import java.net.URI;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -23,21 +24,26 @@ public class PriceClient {
     // to this method with retries/CB/failover capabilities
     // We may also want to cache the results so we don't need to
     // do a request every time
+
     /**
      * Gets a vehicle price from the pricing client, given vehicle ID.
+     *
      * @param vehicleId ID number of the vehicle for which to get the price
-     * @return Currency and price of the requested vehicle,
-     *   error message that the vehicle ID is invalid, or note that the
-     *   service is down.
+     * @return Currency and price of the requested vehicle, error message that the vehicle ID is
+     * invalid, or note that the service is down.
      */
     public String getPrice(Long vehicleId) {
         try {
             Price price = client
                     .get()
-                    .uri(uriBuilder -> uriBuilder
-                            .path("services/price/")
-                            .queryParam("vehicleId", vehicleId)
-                            .build()
+                    .uri(uriBuilder -> {
+                        URI uri = uriBuilder
+                                        .path("services/price")
+                                        .queryParam("vehicleId", vehicleId)
+                                        .build();
+                        System.out.println(uri);
+                        return uri;
+                            }
                     )
                     .retrieve().bodyToMono(Price.class).block();
 
@@ -47,5 +53,21 @@ public class PriceClient {
             log.error("Unexpected error retrieving price for vehicle {}", vehicleId, e);
         }
         return "(consult price)";
+    }
+
+    public void deletePrice(Long vehicleId) {
+        System.out.println("here");
+        client
+                .delete()
+                .uri(uriBuilder -> {
+                    URI uri = uriBuilder
+                            .path("services/price")
+                            .queryParam("vehicleId", vehicleId)
+                            .build();
+                    System.out.println(uri);
+                    return uri;
+                })
+                .retrieve()
+                .bodyToMono(Void.class).block();
     }
 }

@@ -60,4 +60,7 @@ public class PricingService {
                 .multiply(new BigDecimal(5000d)).setScale(2, RoundingMode.HALF_UP);
     }
 
+    public void delete(Long vehicleId) {
+        priceRepository.deleteByVehicleId(vehicleId);
+    }
 }

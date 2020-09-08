@@ -113,6 +113,7 @@ public class CarService {
         optionalCar.ifPresentOrElse(repository::delete, () -> {
             throw new CarNotFoundException();
         });
+        priceClient.deletePrice(id);
         /**
          * TODO: Delete the car from the repository.
          */
