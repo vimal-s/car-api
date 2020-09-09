@@ -38,7 +38,7 @@ public class PriceClient {
                     .get()
                     .uri(uriBuilder -> {
                         URI uri = uriBuilder
-                                        .path("services/price")
+                                        .path("/services/price")
                                         .queryParam("vehicleId", vehicleId)
                                         .build();
                         System.out.println(uri);
@@ -61,7 +61,7 @@ public class PriceClient {
                 .delete()
                 .uri(uriBuilder -> {
                     URI uri = uriBuilder
-                            .path("services/price")
+                            .path("/services/price")
                             .queryParam("vehicleId", vehicleId)
                             .build();
                     System.out.println(uri);
