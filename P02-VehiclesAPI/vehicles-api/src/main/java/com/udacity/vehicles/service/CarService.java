@@ -1,7 +1,9 @@
 package com.udacity.vehicles.service;
 
-//import com.udacity.vehicles.client.maps.MapsClient;
-import com.udacity.vehicles.client.prices.PriceClient;
+//import com.udacity.vehicles.client.maps.MapClient;
+
+import com.udacity.vehicles.client.map.MapClient;
+import com.udacity.vehicles.client.price.PriceClient;
 import com.udacity.vehicles.domain.car.Car;
 import com.udacity.vehicles.domain.car.CarRepository;
 import java.util.List;
@@ -20,12 +22,12 @@ public class CarService {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
     private final CarRepository repository;
     private final PriceClient priceClient;
-//    private final MapsClient mapsClient;
+    private final MapClient mapClient;
 
-    public CarService(CarRepository repository, PriceClient priceClient) {
+    public CarService(CarRepository repository, PriceClient priceClient, MapClient mapClient) {
         this.repository = repository;
         this.priceClient = priceClient;
-//        this.mapsClient = mapsClient;
+        this.mapClient = mapClient;
     }
 
     /**
@@ -33,6 +35,7 @@ public class CarService {
      *
      * @return a list of all vehicles in the CarRepository
      */
+    // todo: set prices of all here and location too
     public List<Car> list() {
         return repository.findAll();
     }
@@ -54,7 +57,7 @@ public class CarService {
         logger.info(car.getPrice());
 
         logger.info(car.getLocation().toString());
-//        car.setLocation(mapsClient.getAddress(car.getLocation()));
+        car.setLocation(mapClient.getAddress(car.getLocation()));
         logger.info(car.getLocation().toString());
         return car;
     }

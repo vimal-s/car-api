@@ -1,11 +1,16 @@
 package com.udacity.boogle.maps.model;
 
 import java.util.Objects;
+import javax.persistence.Embeddable;
 
+@Embeddable
 public class Coordinate {
 
     private double lat;
     private double lon;
+
+    public Coordinate() {
+    }
 
     public Coordinate(double lat, double lon) {
         this.lat = lat;

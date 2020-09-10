@@ -1,4 +1,4 @@
-package com.udacity.vehicles.client.maps;
+package com.udacity.vehicles.client.map;
 
 /**
  * Declares a class to store an address, city, state and zip code.

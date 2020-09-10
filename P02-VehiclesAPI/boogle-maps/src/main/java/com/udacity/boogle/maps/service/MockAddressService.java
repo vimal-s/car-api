@@ -1,4 +1,4 @@
-package com.udacity.boogle.maps.repository;
+package com.udacity.boogle.maps.service;
 
 import com.udacity.boogle.maps.model.Address;
 import java.util.Arrays;
@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 
 /**
- * Implements a mock repository for generating a random address.
+ * Implements a mock address service for generating a random address.
  */
 @Service
 public class MockAddressService {
@@ -35,11 +35,10 @@ public class MockAddressService {
         String cityStateAndZip = addressParts[1];
 
         String[] cityStateAndZipParts = cityStateAndZip.trim().split(" ");
-
         LinkedList<String> list =
-                Arrays.stream(cityStateAndZipParts).map(String::trim)
+                Arrays.stream(cityStateAndZipParts)
+                        .map(String::trim)
                         .collect(Collectors.toCollection(LinkedList::new));
-
         String zip = list.pollLast();
         String state = list.pollLast();
         String city = String.join(" ", list);
@@ -47,6 +46,7 @@ public class MockAddressService {
         return new Address(streetAndNumber, city, state, zip);
     }
 
+    // todo: do you want to keep them in a separate text file
     /**
      * An array of random addresses for use in getRandom()
      */

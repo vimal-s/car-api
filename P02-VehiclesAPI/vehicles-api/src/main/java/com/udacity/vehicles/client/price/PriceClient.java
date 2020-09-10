@@ -1,6 +1,5 @@
-package com.udacity.vehicles.client.prices;
+package com.udacity.vehicles.client.price;
 
-import com.udacity.pricing.domain.price.Price;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -14,8 +13,8 @@ import org.springframework.web.reactive.function.client.WebClient.Builder;
 public class PriceClient {
 
     private static final Logger logger = LoggerFactory.getLogger(PriceClient.class);
-    private final WebClient.Builder clientBuilder;
     private final String SERVICE_NAME = "pricing-service";
+    private final WebClient.Builder clientBuilder;
 
     public PriceClient(Builder clientBuilder) {
         this.clientBuilder = clientBuilder;
@@ -51,8 +50,8 @@ public class PriceClient {
 
         } catch (Exception e) {
             logger.error("Unexpected error retrieving price for vehicle {}", vehicleId, e);
+            return "(consult price)";
         }
-        return "(consult price)";
     }
 
     public void deletePrice(Long vehicleId) {
