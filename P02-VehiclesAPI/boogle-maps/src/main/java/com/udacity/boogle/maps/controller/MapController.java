@@ -12,12 +12,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/maps")
-public class MapsController {
+public class MapController {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
     private final MapService mapService;
 
-    public MapsController(MapService mapService) {
+    public MapController(MapService mapService) {
         this.mapService = mapService;
     }
 

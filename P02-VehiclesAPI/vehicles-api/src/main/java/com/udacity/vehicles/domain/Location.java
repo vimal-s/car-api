@@ -5,10 +5,8 @@ import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
 /**
- * Stores information about a given location.
- * Latitude and longitude must be provided, while other
- * location information must be gathered each time from
- * the maps API.
+ * Stores information about a given location. Latitude and longitude must be provided, while other
+ * location information must be gathered each time from the maps API.
  */
 @Embeddable
 public class Location {

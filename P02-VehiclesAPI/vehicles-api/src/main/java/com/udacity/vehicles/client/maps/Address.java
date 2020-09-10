@@ -10,9 +10,6 @@ public class Address {
     private String state;
     private String zip;
 
-    public Address() {
-    }
-
     public String getAddress() {
         return address;
     }

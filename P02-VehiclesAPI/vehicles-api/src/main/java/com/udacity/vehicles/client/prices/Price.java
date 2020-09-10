@@ -11,9 +11,6 @@ public class Price {
     private BigDecimal price;
     private Long vehicleId;
 
-    public Price() {
-    }
-
     public String getCurrency() {
         return currency;
     }

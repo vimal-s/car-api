@@ -12,8 +12,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 @Component
 public class PriceClient {
 
-    private static final Logger log = LoggerFactory.getLogger(PriceClient.class);
-
+    private static final Logger logger = LoggerFactory.getLogger(PriceClient.class);
     private final WebClient client;
 
     public PriceClient(WebClient pricing) {
@@ -38,25 +37,24 @@ public class PriceClient {
                     .get()
                     .uri(uriBuilder -> {
                         URI uri = uriBuilder
-                                        .path("/services/price")
-                                        .queryParam("vehicleId", vehicleId)
-                                        .build();
-                        System.out.println(uri);
+                                .path("/services/price")
+                                .queryParam("vehicleId", vehicleId)
+                                .build();
+                        logger.info(uri.toString());
                         return uri;
-                            }
-                    )
+                    })
                     .retrieve().bodyToMono(Price.class).block();
 
+            assert price != null;
             return String.format("%s %s", price.getCurrency(), price.getPrice());
 
         } catch (Exception e) {
-            log.error("Unexpected error retrieving price for vehicle {}", vehicleId, e);
+            logger.error("Unexpected error retrieving price for vehicle {}", vehicleId, e);
         }
         return "(consult price)";
     }
 
     public void deletePrice(Long vehicleId) {
-        System.out.println("here");
         client
                 .delete()
                 .uri(uriBuilder -> {
@@ -64,7 +62,7 @@ public class PriceClient {
                             .path("/services/price")
                             .queryParam("vehicleId", vehicleId)
                             .build();
-                    System.out.println(uri);
+                    logger.info(uri.toString());
                     return uri;
                 })
                 .retrieve()

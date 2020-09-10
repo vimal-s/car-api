@@ -5,22 +5,28 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Random;
 import java.util.stream.Collectors;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 
 /**
  * Implements a mock repository for generating a random address.
  */
-@Repository
-public class MockAddressRepository {
+@Service
+public class MockAddressService {
 
     /**
      * Gets a random address from the list.
+     *
      * @return A new, random address split into street, city, state and zip
      */
     public static Address getRandom() {
 
         Random generator = new Random();
-        int randomIndex = generator.nextInt(ADDRESSES.length);
+
+        int randomIndex;
+        do {
+            randomIndex = generator.nextInt(ADDRESSES.length);
+        } while (usedAddressIndexes[randomIndex]);
+        usedAddressIndexes[randomIndex] = true;
 
         String address = ADDRESSES[randomIndex];
 
@@ -39,10 +45,6 @@ public class MockAddressRepository {
         String city = String.join(" ", list);
 
         return new Address(streetAndNumber, city, state, zip);
-    }
-
-    public static int getTotalAddresses() {
-        return ADDRESSES.length;
     }
 
     /**
@@ -284,4 +286,6 @@ public class MockAddressRepository {
             "4538 Us Hwy 231, Wetumpka AL 36092",
             "2575 Us Hwy 43, Winfield AL 35594"
     };
+
+    private static final boolean[] usedAddressIndexes = new boolean[ADDRESSES.length];
 }

@@ -13,7 +13,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.web.reactive.function.client.WebClient;
 import springfox.documentation.builders.PathSelectors;
-import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.service.ApiInfo;
 import springfox.documentation.service.Contact;
 import springfox.documentation.spi.DocumentationType;
@@ -59,25 +58,23 @@ public class VehiclesApiApplication {
     /**
      * Web Client for the maps (location) API
      *
-     * @param endpoint where to communicate for the maps API
+     * @param serviceName where to communicate for the maps API
      * @return created maps endpoint
      */
     @Bean(name = "maps")
-    public WebClient webClientMaps(@Value("${maps.endpoint}") String endpoint) {
-        String pricingService = "map-service";
-//        return WebClient.create(endpoint);
-        return WebClient.create(pricingService);
+    public WebClient webClientMaps(@Value("${map-service.name}") String serviceName) {
+        return WebClient.create(serviceName);
     }
 
     /**
      * Web Client for the pricing API
      *
-     * @param endpoint where to communicate for the pricing API
+     * @param serviceName where to communicate for the pricing API
      * @return created pricing endpoint
      */
     @Bean(name = "pricing")
-    public WebClient webClientPricing(@Value("${pricing.endpoint}") String endpoint) {
-        return WebClient.create("pricing-service");
+    public WebClient webClientPricing(@Value("${pricing-service.name}") String serviceName) {
+        return WebClient.create(serviceName);
     }
 
     @Bean

@@ -25,6 +25,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 public class Car {
 
     @Id
+    // todo: try auto strategy and pass id when creation
     @GeneratedValue
     private Long id;
 
