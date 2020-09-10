@@ -4,10 +4,14 @@ import com.udacity.vehicles.domain.manufacturer.Manufacturer;
 import com.udacity.vehicles.domain.manufacturer.ManufacturerRepository;
 import java.util.Collections;
 import org.modelmapper.ModelMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.cloud.netflix.eureka.server.EnableEurekaServer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
@@ -28,6 +32,8 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableEurekaServer
 @EnableSwagger2
 public class VehiclesApiApplication {
+
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     public static void main(String[] args) {
         SpringApplication.run(VehiclesApiApplication.class, args);
@@ -55,27 +61,37 @@ public class VehiclesApiApplication {
         return new ModelMapper();
     }
 
+    @Bean
+    @LoadBalanced
+    WebClient.Builder webclientBuilder() {
+        return WebClient.builder();
+    }
+
+
     /**
      * Web Client for the maps (location) API
      *
-     * @param serviceName where to communicate for the maps API
+     *   where to communicate for the maps API
      * @return created maps endpoint
      */
-    @Bean(name = "maps")
-    public WebClient webClientMaps(@Value("${map-service.name}") String serviceName) {
-        return WebClient.create(serviceName);
-    }
+//    @Bean(name = "maps")
+//    public WebClient webClientMaps(/*@Value("${map-service.name}") String serviceName, */WebClient.Builder webb) {
+//        return webb.build();
+////        return WebClient.create(serviceName);
+//    }
 
     /**
      * Web Client for the pricing API
      *
-     * @param serviceName where to communicate for the pricing API
+     * serviceName where to communicate for the pricing API
      * @return created pricing endpoint
      */
-    @Bean(name = "pricing")
-    public WebClient webClientPricing(@Value("${pricing-service.name}") String serviceName) {
-        return WebClient.create(serviceName);
-    }
+//    @Bean(name = "pricing")
+////    @LoadBalanced
+//    public WebClient webClientPricing(WebClient.Builder web/*, @Value("${pricing-service.name}") String serviceName*/) {
+////        return WebClient.create("http://" + serviceName);
+//        return web.build();
+//    }
 
     @Bean
     public Docket vehicleApi() {

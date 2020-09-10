@@ -1,10 +1,11 @@
 package com.udacity.vehicles.client.prices;
 
-import java.net.URI;
+import com.udacity.pricing.domain.price.Price;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.reactive.function.client.WebClient.Builder;
 
 /**
  * Implements a class to interface with the Pricing Client for price data.
@@ -13,13 +14,14 @@ import org.springframework.web.reactive.function.client.WebClient;
 public class PriceClient {
 
     private static final Logger logger = LoggerFactory.getLogger(PriceClient.class);
-    private final WebClient client;
+    private final WebClient.Builder clientBuilder;
+    private final String SERVICE_NAME = "pricing-service";
 
-    public PriceClient(WebClient pricing) {
-        this.client = pricing;
+    public PriceClient(Builder clientBuilder) {
+        this.clientBuilder = clientBuilder;
     }
 
-    // In a real-world application we'll want to add some resilience
+// In a real-world application we'll want to add some resilience
     // to this method with retries/CB/failover capabilities
     // We may also want to cache the results so we don't need to
     // do a request every time
@@ -32,20 +34,19 @@ public class PriceClient {
      * invalid, or note that the service is down.
      */
     public String getPrice(Long vehicleId) {
+        logger.info("getPrice");
         try {
-            Price price = client
+            Price price = clientBuilder.build()
                     .get()
-                    .uri(uriBuilder -> {
-                        URI uri = uriBuilder
-                                .path("/services/price")
-                                .queryParam("vehicleId", vehicleId)
-                                .build();
-                        logger.info(uri.toString());
-                        return uri;
-                    })
-                    .retrieve().bodyToMono(Price.class).block();
-
-            assert price != null;
+                    .uri(uriBuilder -> uriBuilder
+                            .host(SERVICE_NAME)
+                            .path("services/price")
+                            .queryParam("vehicleId", vehicleId)
+                            .build())
+                    .retrieve()
+                    .bodyToMono(Price.class)
+                    .block();
+            logger.info(price.toString());
             return String.format("%s %s", price.getCurrency(), price.getPrice());
 
         } catch (Exception e) {
@@ -55,17 +56,16 @@ public class PriceClient {
     }
 
     public void deletePrice(Long vehicleId) {
-        client
+        logger.info("deletePrice");
+        clientBuilder.build()
                 .delete()
-                .uri(uriBuilder -> {
-                    URI uri = uriBuilder
-                            .path("/services/price")
-                            .queryParam("vehicleId", vehicleId)
-                            .build();
-                    logger.info(uri.toString());
-                    return uri;
-                })
+                .uri(uriBuilder -> uriBuilder
+                        .host(SERVICE_NAME)
+                        .path("/services/price")
+                        .queryParam("vehicleId", vehicleId)
+                        .build())
                 .retrieve()
-                .bodyToMono(Void.class).block();
+                .bodyToMono(Void.class)
+                .block();
     }
 }

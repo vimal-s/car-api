@@ -5,7 +5,7 @@ import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.udacity.vehicles.client.maps.MapsClient;
+//import com.udacity.vehicles.client.maps.MapsClient;
 import com.udacity.vehicles.client.prices.PriceClient;
 import com.udacity.vehicles.domain.Condition;
 import com.udacity.vehicles.domain.Location;
@@ -49,8 +49,8 @@ public class CarControllerTest {
     @MockBean
     private PriceClient priceClient;
 
-    @MockBean
-    private MapsClient mapsClient;
+//    @MockBean
+//    private MapsClient mapsClient;
 
     /**
      * Creates pre-requisites for testing, such as an example car.
