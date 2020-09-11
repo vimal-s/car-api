@@ -1,7 +1,7 @@
-package com.udacity.boogle.maps.controller;
+package com.udacity.boogle.maps.api;
 
-import com.udacity.boogle.maps.model.Address;
-import com.udacity.boogle.maps.model.Coordinate;
+import com.udacity.boogle.maps.domain.address.Address;
+import com.udacity.boogle.maps.domain.Coordinate;
 import com.udacity.boogle.maps.service.MapService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

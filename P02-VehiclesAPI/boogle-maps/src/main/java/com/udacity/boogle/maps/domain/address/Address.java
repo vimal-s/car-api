@@ -1,5 +1,6 @@
-package com.udacity.boogle.maps.model;
+package com.udacity.boogle.maps.domain.address;
 
+import com.udacity.boogle.maps.domain.Coordinate;
 import java.util.Objects;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;

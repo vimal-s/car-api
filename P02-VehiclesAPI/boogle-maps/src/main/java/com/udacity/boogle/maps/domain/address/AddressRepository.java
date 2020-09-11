@@ -1,7 +1,7 @@
-package com.udacity.boogle.maps.repository;
+package com.udacity.boogle.maps.domain.address;
 
-import com.udacity.boogle.maps.model.Address;
-import com.udacity.boogle.maps.model.Coordinate;
+import com.udacity.boogle.maps.domain.Coordinate;
+import com.udacity.boogle.maps.domain.address.Address;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

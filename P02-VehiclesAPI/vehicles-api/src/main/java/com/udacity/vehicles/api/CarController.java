@@ -4,6 +4,7 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
 import com.udacity.vehicles.domain.car.Car;
+import com.udacity.vehicles.domain.manufacturer.Manufacturer;
 import com.udacity.vehicles.service.CarService;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -71,7 +72,7 @@ class CarController {
      * @throws URISyntaxException if the request contains invalid fields or syntax
      */
     @PostMapping
-    ResponseEntity<?> post(@Valid @RequestBody Car car) throws URISyntaxException {
+    ResponseEntity<?> post(@Valid @RequestBody Car car) throws Throwable {
         Car car1 = carService.save(car);
         Resource<Car> resource = assembler.toResource(car1);
         return ResponseEntity.created(new URI(resource.getId().expand().getHref())).body(resource);
@@ -84,7 +85,7 @@ class CarController {
      * @return response that the vehicle was updated in the system
      */
     @PutMapping("/{id}")
-    ResponseEntity<?> put(@PathVariable Long id, @Valid @RequestBody Car car) {
+    ResponseEntity<?> put(@PathVariable Long id, @Valid @RequestBody Car car) throws Throwable {
         car.setId(id);
         Car car1 = carService.save(car);
         Resource<Car> resource = assembler.toResource(car1);
@@ -103,4 +104,8 @@ class CarController {
     }
 
     // todo: add get manufacturers
+    @GetMapping("/manufacturers")
+    List<Manufacturer> getManufacturers() {
+        return carService.getManufacturers();
+    }
 }

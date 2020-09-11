@@ -1,12 +1,14 @@
 package com.udacity.vehicles.api;
 
+import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-//import com.udacity.vehicles.client.maps.MapClient;
-import com.udacity.vehicles.client.price.PriceClient;
+import com.jayway.jsonpath.JsonPath;
 import com.udacity.vehicles.domain.Condition;
 import com.udacity.vehicles.domain.Location;
 import com.udacity.vehicles.domain.car.Car;
@@ -27,11 +29,12 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 
 /**
  * Implements testing of the CarController class.
  */
-@RunWith(SpringRunner.class)
+@RunWith(SpringRunner.class)    // todo: what is this?
 @SpringBootTest
 @AutoConfigureMockMvc
 @AutoConfigureJsonTesters
@@ -45,12 +48,6 @@ public class CarControllerTest {
 
     @MockBean
     private CarService carService;
-
-    @MockBean
-    private PriceClient priceClient;
-
-//    @MockBean
-//    private MapClient mapsClient;
 
     /**
      * Creates pre-requisites for testing, such as an example car.
@@ -87,12 +84,9 @@ public class CarControllerTest {
      */
     @Test
     public void listCars() throws Exception {
-        /**
-         * TODO: Add a test to check that the `get` method works by calling
-         *   the whole list of vehicles. This should utilize the car from `getCar()`
-         *   below (the vehicle will be the first in the list).
-         */
+        String content = getContent(get("/cars"));
 
+        testPresence(content, "$._embedded.carList[0]");
     }
 
     /**
@@ -102,10 +96,9 @@ public class CarControllerTest {
      */
     @Test
     public void findCar() throws Exception {
-        /**
-         * TODO: Add a test to check that the `get` method works by calling
-         *   a vehicle by ID. This should utilize the car from `getCar()` below.
-         */
+        String content = getContent(get("/cars/1"));
+
+        testPresence(content, "$");
     }
 
     /**
@@ -115,11 +108,24 @@ public class CarControllerTest {
      */
     @Test
     public void deleteCar() throws Exception {
-        /**
-         * TODO: Add a test to check whether a vehicle is appropriately deleted
-         *   when the `delete` method is called from the Car Controller. This
-         *   should utilize the car from `getCar()` below.
-         */
+        mvc.perform(delete("/cars/1"))
+                .andExpect(status().is2xxSuccessful());
+    }
+
+    private String getContent(MockHttpServletRequestBuilder mockHttpServletRequestBuilder)
+            throws Exception {
+        return mvc
+                .perform(mockHttpServletRequestBuilder)
+                .andExpect(status().isOk())
+                .andReturn()
+                .getResponse()
+                .getContentAsString();
+    }
+
+    private void testPresence(String content, String base) {
+        assertEquals("1", JsonPath.read(content, base + ".id").toString());
+        assertEquals("sedan", JsonPath.read(content, base + ".details.body"));
+        assertEquals(Condition.USED.toString(), JsonPath.read(content, base + ".condition"));
     }
 
     /**

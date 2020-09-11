@@ -1,4 +1,4 @@
-package com.udacity.boogle.maps.model;
+package com.udacity.boogle.maps.domain;
 
 import java.util.Objects;
 import javax.persistence.Embeddable;

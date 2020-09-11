@@ -1,6 +1,6 @@
 package com.udacity.boogle.maps.service;
 
-import com.udacity.boogle.maps.model.Address;
+import com.udacity.boogle.maps.domain.address.Address;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Random;

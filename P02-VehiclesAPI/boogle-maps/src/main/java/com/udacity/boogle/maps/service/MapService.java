@@ -1,8 +1,8 @@
 package com.udacity.boogle.maps.service;
 
-import com.udacity.boogle.maps.model.Address;
-import com.udacity.boogle.maps.model.Coordinate;
-import com.udacity.boogle.maps.repository.AddressRepository;
+import com.udacity.boogle.maps.domain.address.Address;
+import com.udacity.boogle.maps.domain.Coordinate;
+import com.udacity.boogle.maps.domain.address.AddressRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
