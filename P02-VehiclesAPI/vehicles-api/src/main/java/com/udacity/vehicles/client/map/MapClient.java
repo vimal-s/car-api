@@ -32,7 +32,6 @@ public class MapClient {
      * noting the Maps service is down
      */
     public Location getAddress(Location location) {
-        logger.info("getAddress");
         try {
             Address address = clientBuilder.build()
                     .get()
@@ -42,12 +41,15 @@ public class MapClient {
                             .queryParam("lat", location.getLat())
                             .queryParam("lon", location.getLon())
                             .build())
-                    .retrieve().bodyToMono(Address.class).block();
-            logger.info(address.toString());
-//            mapper.map(Objects.requireNonNull(address), location);
+                    .retrieve()
+                    .bodyToMono(Address.class)
+                    .block();
             mapper.map(address, location);
         } catch (Exception e) {
             logger.warn("Map service is down");
+            Address address = new Address("will be updated", "will be updated", "will be updated",
+                    "will be updated");
+            mapper.map(address, location);
         }
         return location;
     }

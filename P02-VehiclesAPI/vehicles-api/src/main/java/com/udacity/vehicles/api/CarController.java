@@ -6,12 +6,12 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 import com.udacity.vehicles.domain.car.Car;
 import com.udacity.vehicles.domain.manufacturer.Manufacturer;
 import com.udacity.vehicles.service.CarService;
+import io.swagger.annotations.ApiOperation;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.validation.Valid;
-
 import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.Resources;
 import org.springframework.http.ResponseEntity;
@@ -29,6 +29,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/cars")
+//@Api(value = "Perform CRUD operations with car objects", description = "", tags = "Carsss")
 class CarController {
 
     private final CarService carService;
@@ -41,11 +42,11 @@ class CarController {
 
     /**
      * Creates a list to store any vehicles.
+     *
      * @return list of vehicles
      */
     @GetMapping
-    // todo: try changing return to response entity and swagger 3
-    // this method giving error with swagger 3.0.0
+    @ApiOperation(value = "Retrieve all stored cars")
     Resources<Resource<Car>> list() {
         List<Resource<Car>> resources = carService.list().stream().map(assembler::toResource)
                 .collect(Collectors.toList());
@@ -55,23 +56,26 @@ class CarController {
 
     /**
      * Gets information of a specific car by ID.
+     *
      * @param id the id number of the given vehicle
      * @return all information for the requested vehicle
      */
     @GetMapping("/{id}")
+    @ApiOperation(value = "Retrieve a specific car")
     Resource<Car> get(@PathVariable Long id) throws Throwable {
         Car car = carService.findById(id);
-        // todo: maybe change this to response entity
         return assembler.toResource(car);
     }
 
     /**
      * Posts information to create a new vehicle in the system.
+     *
      * @param car A new vehicle to add to the system.
      * @return response that the new vehicle was added to the system
      * @throws URISyntaxException if the request contains invalid fields or syntax
      */
     @PostMapping
+    @ApiOperation(value = "Save a new car")
     ResponseEntity<?> post(@Valid @RequestBody Car car) throws Throwable {
         Car car1 = carService.save(car);
         Resource<Car> resource = assembler.toResource(car1);
@@ -80,11 +84,13 @@ class CarController {
 
     /**
      * Updates the information of a vehicle in the system.
-     * @param id The ID number for which to update vehicle information.
+     *
+     * @param id  The ID number for which to update vehicle information.
      * @param car The updated information about the related vehicle.
      * @return response that the vehicle was updated in the system
      */
     @PutMapping("/{id}")
+    @ApiOperation(value = "Update details and location of a specific car")
     ResponseEntity<?> put(@PathVariable Long id, @Valid @RequestBody Car car) throws Throwable {
         car.setId(id);
         Car car1 = carService.save(car);
@@ -94,17 +100,19 @@ class CarController {
 
     /**
      * Removes a vehicle from the system.
+     *
      * @param id The ID number of the vehicle to remove.
      * @return response that the related vehicle is no longer in the system
      */
     @DeleteMapping("/{id}")
+    @ApiOperation(value = "Delete a specific car")
     ResponseEntity<?> delete(@PathVariable Long id) {
         carService.delete(id);
         return ResponseEntity.noContent().build();
     }
 
-    // todo: add get manufacturers
     @GetMapping("/manufacturers")
+    @ApiOperation(value = "Get all available manufacturers")
     List<Manufacturer> getManufacturers() {
         return carService.getManufacturers();
     }

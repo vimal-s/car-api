@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
  * Implements a REST-based controller for the pricing service.
  */
 @RestController
-// todo:try changing endpoint
 @RequestMapping("/services/price")
 public class PricingController {
 
@@ -33,13 +32,11 @@ public class PricingController {
      */
     @GetMapping
     public Price get(@RequestParam Long vehicleId) {
-        logger.info("Asking for price");
         return pricingService.getPrice(vehicleId);
     }
 
     @DeleteMapping
     public void delete(@RequestParam Long vehicleId) {
-        logger.info("Deleting price");
         pricingService.deletePrice(vehicleId);
     }
 }

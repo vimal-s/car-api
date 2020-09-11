@@ -46,7 +46,6 @@ public class MockAddressService {
         return new Address(streetAndNumber, city, state, zip);
     }
 
-    // todo: do you want to keep them in a separate text file
     /**
      * An array of random addresses for use in getRandom()
      */

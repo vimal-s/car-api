@@ -13,7 +13,6 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.*;
 @Component
 public class CarResourceAssembler implements ResourceAssembler<Car, Resource<Car>> {
 
-    // todo: what is this?
     @Override
     public Resource<Car> toResource(Car car) {
         Resource<Car> resource = null;

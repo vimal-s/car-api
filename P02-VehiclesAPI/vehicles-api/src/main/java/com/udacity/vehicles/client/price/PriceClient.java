@@ -45,17 +45,14 @@ public class PriceClient {
                     .retrieve()
                     .bodyToMono(Price.class)
                     .block();
-            logger.info(price.toString());
             return String.format("%s %s", price.getCurrency(), price.getPrice());
-
         } catch (Exception e) {
-            logger.error("Unexpected error retrieving price for vehicle {}", vehicleId, e);
+            logger.error("Unexpected error retrieving price for vehicle {}", vehicleId);
             return "(consult price)";
         }
     }
 
     public void deletePrice(Long vehicleId) {
-        logger.info("deletePrice");
         clientBuilder.build()
                 .delete()
                 .uri(uriBuilder -> uriBuilder

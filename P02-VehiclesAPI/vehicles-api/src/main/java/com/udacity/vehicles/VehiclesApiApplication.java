@@ -26,7 +26,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
  * database, and launches web clients to communicate with maps and pricing.
  */
 @SpringBootApplication
-@EnableJpaAuditing  // todo: what is this?
+@EnableJpaAuditing
 @EnableEurekaServer
 @EnableSwagger2
 public class VehiclesApiApplication {

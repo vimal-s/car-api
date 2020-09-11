@@ -34,7 +34,7 @@ import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilde
 /**
  * Implements testing of the CarController class.
  */
-@RunWith(SpringRunner.class)    // todo: what is this?
+@RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
 @AutoConfigureJsonTesters

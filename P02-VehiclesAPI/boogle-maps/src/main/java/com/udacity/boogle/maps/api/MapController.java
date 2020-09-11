@@ -24,7 +24,6 @@ public class MapController {
     @GetMapping
     public Address get(@RequestParam double lat, @RequestParam double lon) {
         Coordinate coordinate = new Coordinate(lat, lon);
-        logger.info(coordinate.toString());
         return mapService.getAddress(coordinate);
     }
 }

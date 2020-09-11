@@ -33,7 +33,7 @@ public class PricingControllerTest {
     private MockMvc mvc;
 
     @Autowired
-    private JacksonTester<Price> json;  // todo: what is this?
+    private JacksonTester<Price> json;
 
     @MockBean
     private PricingService service;
