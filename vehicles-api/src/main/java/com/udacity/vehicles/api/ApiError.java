@@ -10,18 +10,18 @@ import java.util.List;
 class ApiError {
 
     private final String message;
-    private final List<String> errors;
+    private final List<String> errorChain;
 
-    ApiError(String message, List<String> errors) {
+    ApiError(String message, List<String> errorChain) {
         this.message = message;
-        this.errors = errors;
+        this.errorChain = errorChain;
     }
 
     public String getMessage() {
         return message;
     }
 
-    public List<String> getErrors() {
-        return errors;
+    public List<String> getErrorChain() {
+        return errorChain;
     }
 }

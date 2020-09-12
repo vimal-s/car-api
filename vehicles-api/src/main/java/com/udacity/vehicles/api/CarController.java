@@ -29,7 +29,6 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/cars")
-//@Api(value = "Perform CRUD operations with car objects", description = "", tags = "Carsss")
 class CarController {
 
     private final CarService carService;

@@ -47,8 +47,8 @@ public class MapClient {
             mapper.map(address, location);
         } catch (Exception e) {
             logger.warn("Map service is down");
-            Address address = new Address("will be updated", "will be updated", "will be updated",
-                    "will be updated");
+            String defaultMsg = "(will be updated)";
+            Address address = new Address(defaultMsg, defaultMsg, defaultMsg, defaultMsg);
             mapper.map(address, location);
         }
         return location;

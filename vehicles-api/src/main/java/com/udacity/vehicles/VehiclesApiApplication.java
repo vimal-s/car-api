@@ -25,10 +25,10 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
  * Launches a Spring Boot application for the Vehicles API, initializes the car manufacturers in the
  * database, and launches web clients to communicate with maps and pricing.
  */
-@SpringBootApplication
-@EnableJpaAuditing
 @EnableEurekaServer
 @EnableSwagger2
+@SpringBootApplication
+@EnableJpaAuditing
 public class VehiclesApiApplication {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -82,3 +82,15 @@ public class VehiclesApiApplication {
                 .getLicense(), ApiInfo.DEFAULT.getLicenseUrl(), Collections.emptyList());
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+

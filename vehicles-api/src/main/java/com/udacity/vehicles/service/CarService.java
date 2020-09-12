@@ -56,7 +56,8 @@ public class CarService {
         Car car =
                 carRepository
                         .findById(id)
-                        .orElseThrow((Supplier<Throwable>) CarNotFoundException::new);
+                        .orElseThrow((Supplier<Throwable>) () ->
+                                new CarNotFoundException("Car not found with id: " + id));
         updatePriceAndLocation(car);
         return car;
     }
@@ -82,17 +83,13 @@ public class CarService {
                         updatePriceAndLocation(car1);
                         return car1;
                     })
-                    .orElseThrow(CarNotFoundException::new);
+                    .orElseThrow((Supplier<Throwable>) () ->
+                            new CarNotFoundException("Car not found with id: " + car.getId()));
         }
 
         Car car1 = carRepository.save(car);
         updatePriceAndLocation(car1);
         return car1;
-    }
-
-    private void updatePriceAndLocation(Car car) {
-        car.setPrice(priceClient.getPrice(car.getId()));
-        car.setLocation(mapClient.getAddress(car.getLocation()));
     }
 
     /**
@@ -103,9 +100,18 @@ public class CarService {
     @Transactional
     public void delete(Long id) {
         carRepository.findById(id).ifPresentOrElse(car -> carRepository.deleteById(id), () -> {
-            throw new CarNotFoundException();
+            throw new CarNotFoundException("Car not found with id: " + id);
         });
-        priceClient.deletePrice(id);
+        try {
+            priceClient.deletePrice(id);
+        } catch (Exception e) {
+            throw new ServiceUnavailableException();
+        }
+    }
+
+    private void updatePriceAndLocation(Car car) {
+        car.setPrice(priceClient.getPrice(car.getId()));
+        car.setLocation(mapClient.getAddress(car.getLocation()));
     }
 
     public List<Manufacturer> getManufacturers() {

@@ -33,7 +33,6 @@ public class PriceClient {
      * invalid, or note that the service is down.
      */
     public String getPrice(Long vehicleId) {
-        logger.info("getPrice");
         try {
             Price price = clientBuilder.build()
                     .get()

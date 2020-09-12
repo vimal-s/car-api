@@ -22,9 +22,14 @@ public class MockAddressService {
 
         Random generator = new Random();
 
+        int count = 0;
         int randomIndex;
         do {
             randomIndex = generator.nextInt(ADDRESSES.length);
+            count++;
+            if (count >= ADDRESSES.length) {
+                throw new NoMoreAddressException();
+            }
         } while (usedAddressIndexes[randomIndex]);
         usedAddressIndexes[randomIndex] = true;
 
