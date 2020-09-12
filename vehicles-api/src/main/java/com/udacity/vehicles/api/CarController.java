@@ -56,6 +56,7 @@ class CarController {
                         .stream()
                         .map(carAssembler::toResource)
                         .collect(Collectors.toList());
+
         return new Resources<>(resources,
                 linkTo(methodOn(CarController.class).list()).withSelfRel());
     }

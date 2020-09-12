@@ -36,7 +36,7 @@ public class PricingControllerTest {
                 .andReturn()
                 .getResponse()
                 .getContentAsString();
-        System.out.println(responseContent);
+
         assertEquals("INR", JsonPath.read(responseContent, "$.currency"));
     }
 
