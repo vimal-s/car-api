@@ -23,8 +23,8 @@ view of vehicle details including price and address.
 
 #### Run the Code
 
-To properly run this application you need to start the Orders API and
-the Service API first.
+To properly run this application you need to start the map-service and
+the pricing-service.
 
 
 ```
@@ -39,7 +39,8 @@ Import it in your favorite IDE as a Maven Project.
 
 ## Operations
 
-Swagger UI: http://localhost:8080/swagger-ui.html
+- Eureka Dashboard: http://localhost:8761
+- Swagger UI: http://localhost:8761/swagger-ui.html
 
 ### Create a Vehicle
 
