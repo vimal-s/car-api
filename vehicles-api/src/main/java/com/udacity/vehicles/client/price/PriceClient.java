@@ -38,8 +38,7 @@ public class PriceClient {
                     .get()
                     .uri(uriBuilder -> uriBuilder
                             .host(SERVICE_NAME)
-                            .path("services/price")
-                            .queryParam("vehicleId", vehicleId)
+                            .path("/prices/" + vehicleId)
                             .build())
                     .retrieve()
                     .bodyToMono(Price.class)
@@ -52,12 +51,14 @@ public class PriceClient {
     }
 
     public void deletePrice(Long vehicleId) {
+        // this will resolve the bug in deleting cars added to database at the time of pricing-service being down
+        getPrice(vehicleId);
+
         clientBuilder.build()
                 .delete()
                 .uri(uriBuilder -> uriBuilder
                         .host(SERVICE_NAME)
-                        .path("/services/price")
-                        .queryParam("vehicleId", vehicleId)
+                        .path("/prices/" + vehicleId)
                         .build())
                 .retrieve()
                 .bodyToMono(Void.class)

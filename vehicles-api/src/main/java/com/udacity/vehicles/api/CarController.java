@@ -32,11 +32,14 @@ import org.springframework.web.bind.annotation.RestController;
 class CarController {
 
     private final CarService carService;
-    private final CarResourceAssembler assembler;
+    private final CarResourceAssembler carAssembler;
+    private final ManufacturerResourceAssembler manufacturerAssembler;
 
-    CarController(CarService carService, CarResourceAssembler assembler) {
+    CarController(CarService carService, CarResourceAssembler carAssembler,
+            ManufacturerResourceAssembler manufacturerAssembler) {
         this.carService = carService;
-        this.assembler = assembler;
+        this.carAssembler = carAssembler;
+        this.manufacturerAssembler = manufacturerAssembler;
     }
 
     /**
@@ -47,8 +50,12 @@ class CarController {
     @GetMapping
     @ApiOperation(value = "Retrieve all stored cars")
     Resources<Resource<Car>> list() {
-        List<Resource<Car>> resources = carService.list().stream().map(assembler::toResource)
-                .collect(Collectors.toList());
+        List<Resource<Car>> resources =
+                carService
+                        .list()
+                        .stream()
+                        .map(carAssembler::toResource)
+                        .collect(Collectors.toList());
         return new Resources<>(resources,
                 linkTo(methodOn(CarController.class).list()).withSelfRel());
     }
@@ -63,7 +70,7 @@ class CarController {
     @ApiOperation(value = "Retrieve a specific car")
     Resource<Car> get(@PathVariable Long id) throws Throwable {
         Car car = carService.findById(id);
-        return assembler.toResource(car);
+        return carAssembler.toResource(car);
     }
 
     /**
@@ -77,8 +84,10 @@ class CarController {
     @ApiOperation(value = "Save a new car")
     ResponseEntity<?> post(@Valid @RequestBody Car car) throws Throwable {
         Car car1 = carService.save(car);
-        Resource<Car> resource = assembler.toResource(car1);
-        return ResponseEntity.created(new URI(resource.getId().expand().getHref())).body(resource);
+        Resource<Car> resource = carAssembler.toResource(car1);
+        return ResponseEntity
+                .created(new URI(resource.getId().expand().getHref()))
+                .body(resource);
     }
 
     /**
@@ -93,7 +102,7 @@ class CarController {
     ResponseEntity<?> put(@PathVariable Long id, @Valid @RequestBody Car car) throws Throwable {
         car.setId(id);
         Car car1 = carService.save(car);
-        Resource<Car> resource = assembler.toResource(car1);
+        Resource<Car> resource = carAssembler.toResource(car1);
         return ResponseEntity.ok(resource);
     }
 
@@ -112,7 +121,15 @@ class CarController {
 
     @GetMapping("/manufacturers")
     @ApiOperation(value = "Get all available manufacturers")
-    List<Manufacturer> getManufacturers() {
-        return carService.getManufacturers();
+    Resources<Resource<Manufacturer>> getManufacturers() {
+        List<Resource<Manufacturer>> resources =
+                carService
+                        .getManufacturers()
+                        .stream()
+                        .map(manufacturerAssembler::toResource)
+                        .collect(Collectors.toList());
+
+        return new Resources<>(resources,
+                linkTo(methodOn(CarController.class).getManufacturers()).withSelfRel());
     }
 }
