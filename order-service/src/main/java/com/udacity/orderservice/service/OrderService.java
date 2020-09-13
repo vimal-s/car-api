@@ -3,6 +3,7 @@ package com.udacity.orderservice.service;
 import com.udacity.orderservice.domain.Order;
 import com.udacity.orderservice.domain.OrderRepository;
 import java.util.List;
+import java.util.function.Predicate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -25,13 +26,11 @@ public class OrderService {
         repository.deleteByVehicleId(vehicleId);
     }
 
-    public Order saveOne(Order order) {
-        return repository.save(order);
+    public Order saveOne(Order order1) {
+        return repository.save(order1);
 
         // implement update functionality if needed
     }
 
-    public void deleteOne(Long orderId) {
-        repository.deleteById(orderId);
-    }
+
 }

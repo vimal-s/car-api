@@ -15,6 +15,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.web.reactive.function.client.WebClient;
 import springfox.documentation.builders.PathSelectors;
+import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.service.ApiInfo;
 import springfox.documentation.service.Contact;
 import springfox.documentation.spi.DocumentationType;
@@ -68,8 +69,9 @@ public class VehiclesApiApplication {
     public Docket vehicleApi() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
-//                .apis(RequestHandlerSelectors.basePackage("com.udacity"))
-                .paths(PathSelectors.ant("/cars/**"))
+                .apis(RequestHandlerSelectors.basePackage("com.udacity"))
+//                .paths(PathSelectors.ant("/cars/**"))
+//                .paths(PathSelectors.ant("/orders/**"))
                 .build()
                 .apiInfo(apiInfo());
     }

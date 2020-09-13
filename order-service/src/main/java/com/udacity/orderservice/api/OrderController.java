@@ -38,18 +38,4 @@ public class OrderController {
     public void deleteOrders(@RequestParam Long vehicleId) {
         service.delete(vehicleId);
     }
-
-/*
-
-    @PutMapping
-    public Order updateOrder(@RequestParam Long orderId, @RequestBody Order order) {
-        order.setId(orderId);
-        return service.saveOne(order);
-    }
-
-    @DeleteMapping
-    public void deleteOrder(@RequestParam Long orderId) {
-        service.deleteOne(orderId);
-    }
-*/
 }

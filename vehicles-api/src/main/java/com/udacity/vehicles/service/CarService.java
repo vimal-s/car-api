@@ -25,14 +25,17 @@ public class CarService {
     private final ManufacturerRepository manufacturerRepository;
     private final PriceClient priceClient;
     private final MapClient mapClient;
+    private final OrderService orderService;
 
     public CarService(CarRepository carRepository,
             ManufacturerRepository manufacturerRepository,
-            PriceClient priceClient, MapClient mapClient) {
+            PriceClient priceClient, MapClient mapClient,
+            OrderService orderService) {
         this.carRepository = carRepository;
         this.manufacturerRepository = manufacturerRepository;
         this.priceClient = priceClient;
         this.mapClient = mapClient;
+        this.orderService = orderService;
     }
 
     /**
@@ -104,8 +107,9 @@ public class CarService {
         });
         try {
             priceClient.deletePrice(id);
+            orderService.deleteOrders(id);
         } catch (Exception e) {
-            throw new ServiceUnavailableException();
+            throw new ServiceUnavailableException("Pricing service may be down");
         }
     }
 
