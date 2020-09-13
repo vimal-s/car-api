@@ -39,8 +39,7 @@ Import it in your favorite IDE as a Maven Project.
 
 ## Operations
 
-- Eureka Dashboard: http://localhost:8761
-- Swagger UI: http://localhost:8761/swagger-ui.html
+- Swagger UI: http://localhost:8080/swagger-ui.html
 
 ### Create a Vehicle
 
