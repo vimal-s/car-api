@@ -8,7 +8,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -35,6 +34,13 @@ public class OrderController {
         return service.saveOne(order);
     }
 
+    @DeleteMapping
+    public void deleteOrders(@RequestParam Long vehicleId) {
+        service.delete(vehicleId);
+    }
+
+/*
+
     @PutMapping
     public Order updateOrder(@RequestParam Long orderId, @RequestBody Order order) {
         order.setId(orderId);
@@ -45,9 +51,5 @@ public class OrderController {
     public void deleteOrder(@RequestParam Long orderId) {
         service.deleteOne(orderId);
     }
-
-    @DeleteMapping
-    public void deleteOrders(@RequestParam Long vehicleId) {
-        service.delete(vehicleId);
-    }
+*/
 }

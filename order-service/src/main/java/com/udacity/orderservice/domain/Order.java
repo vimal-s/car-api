@@ -7,10 +7,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import javax.validation.Valid;
 import org.springframework.data.annotation.CreatedDate;
 
 @Entity
+@Table(name = "order_table")
 public class Order {
 
     @Id
@@ -24,7 +26,6 @@ public class Order {
     @Embedded
     private Customer customer;
 
-    @ManyToOne
     private Long vehicleId;
 
     public Long getId() {
